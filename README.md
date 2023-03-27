@@ -74,13 +74,20 @@ If you got the output, the NVIDIA Driver is already installed. Then go to the ne
 ![smi](https://user-images.githubusercontent.com/95120444/228067789-0d42c6f4-daaa-4c9c-aa4c-bc95359f4a5e.png)
 
 If not, follow those step bellow:
-1. Go to NVIDIA Driver Downloads site: [Link](https://www.nvidia.com/download/index.aspx?lang=en-us)
-2. Search for your GPU and then download it. Remember to choose `Linux 64-bit` Operating System
+1. Install any pending updates for your existing packages
+    ```bash
+    sudo apt update && sudo apt upgrade -y
+    ```
+2. Install all essential packages
+    ```bash
+    sudo apt install build-essential
+    ```
+3. Go to NVIDIA Driver Downloads site: https://www.nvidia.com/download/index.aspx?lang=en-us
+4. Search for your GPU and then download it. Remember to choose `Linux 64-bit` Operating System
     ![driver](https://user-images.githubusercontent.com/95120444/228067841-b66b38aa-8d27-4f9d-8ad1-0c87bb524fc7.png)
-3. Install the driver:
+5. Install the driver:
 - Your driver may be of a higher version than this instructions, those following command is an example
 - Please use **Tab** to autocomplete the file name
-
     1. Open terminal and then navigate to your directory containing the driver
     2. Give execution permission:
         ```bash
@@ -91,14 +98,14 @@ If not, follow those step bellow:
         sudo ./NVIDIA-Linux-x86_64-5xx.x.x.run 
         ```
     4. Press enter and read those information carefully, you can watch some other driver installation video if it's hard to understand
-    5. Now reset your computer or open terminal and type:
+    5. Now reset your computer or open terminal and run:
         ```bash
         reboot 
         ```
-4. Then [Verification](#verification)
+6.  [Verification](#verification)
 
 ### 2. Miniconda
-You can use the following command to install Miniconda.
+You can use the following command to install Miniconda
 
 Download
 ```bash
