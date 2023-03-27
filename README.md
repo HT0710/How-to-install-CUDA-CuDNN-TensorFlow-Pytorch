@@ -71,18 +71,17 @@ nvidia-smi
 
 If you got the output, the NVIDIA Driver is already installed. Then go to the next step.
 
-![smi](images/smi.png)
+![smi](https://user-images.githubusercontent.com/95120444/228067789-0d42c6f4-daaa-4c9c-aa4c-bc95359f4a5e.png)
 
 If not, follow those step bellow:
 1. Go to NVIDIA Driver Downloads site: [Link](https://www.nvidia.com/download/index.aspx?lang=en-us)
 2. Search for your GPU and then download it. Remember to choose `Linux 64-bit` Operating System
-    ![driver](images/driver.png)
+    ![driver](https://user-images.githubusercontent.com/95120444/228067841-b66b38aa-8d27-4f9d-8ad1-0c87bb524fc7.png)
 3. Install the driver:
 - Your driver may be of a higher version than this instructions, those following command is an example
 - Please use **Tab** to autocomplete the file name
 
     1. Open terminal and then navigate to your directory containing the driver
-       
     2. Give execution permission:
         ```bash
         sudo chmod -x NVIDIA-Linux-x86_64-5xx.x.x.run 
@@ -114,7 +113,10 @@ Install
 3. Press q to skip the License Agreement detail
 4. Type `yes` and press Enter
 5. Press Enter to confirm the installation location
-6. When done, close the current terminal and open the a one for it to work
+6. Reopen your terminal or:
+   ```bash
+   source ~/.bashrc
+   ```
 7. Disable conda auto activate base
     ```bash
     conda config --set auto_activate_base false 
@@ -139,17 +141,15 @@ Install:
     ```bash
     sudo sh cuda_11.8.0_520.61.05_linux.run --silent --toolkit 
     ```
-2. Add CUDA to path, first open:
+2. Add CUDA to path:
     ```bash
-    sudo nano ~/.bashrc 
+    echo 'export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}' >> ~/.bashrc 
+    echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc 
     ```
-3. Then add those 2 lines at the end of the file:
+3. Reopen your terminal or:
     ```bash
-    export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
-    export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    source ~/.bashrc
     ```
-4. Save by press `Ctrl + s` and exit by press `Ctrl + x`
-5. Close the current terminal and open a new one for it to work
 
 #### Verification
 ```bash
@@ -157,8 +157,7 @@ nvcc --version
 ```
 Output:
 
-![cuda](images/cuda.png)
-
+![cuda](https://user-images.githubusercontent.com/95120444/228067950-c72ee4e5-fcf7-488b-9ff4-7739b0bd405b.png)
 
 ## **Install CuDNN**
 The installation bellow is **cuDNN v8.6.0**
@@ -167,7 +166,7 @@ The installation bellow is **cuDNN v8.6.0**
 2. You'll have to log in, answer a few questions then you will be redirected to download. (You need to have a developer account to get CuDNN there are no direct links to download files. Why? Ask Nvidia)
 3. Select **Download cuDNN v8.6.0 (October 3rd, 2022), for CUDA 11.x**
 4. Select **Local Installer for Linux x86_64 (Tar)**
-    ![cudnn1](images/cudnn1.png)
+    ![cudnn1](https://user-images.githubusercontent.com/95120444/228067998-c7738898-aad4-43a6-8fb4-e9830a022b84.png)
 5. Open terminal and then navigate to your directory containing the cuDNN tar file
 6. Unzip the CuDNN package
     ```bash
@@ -186,8 +185,7 @@ cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 ```
 Output:
 
-![cudnn](images/cudnn.png)
-
+![cudnn](https://user-images.githubusercontent.com/95120444/228068029-a4e9fabb-b1aa-4b30-bb6f-0a3c7f27ce0f.png)
 
 ## **Install TensorFlow**
 
