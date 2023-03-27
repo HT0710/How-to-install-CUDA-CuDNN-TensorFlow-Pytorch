@@ -71,12 +71,12 @@ nvidia-smi
 
 If you got the output, the NVIDIA Driver is already installed. Then go to the next step.
 
-![smi](smi.png)
+![smi](images/smi.png)
 
 If not, follow those step bellow:
 1. Go to NVIDIA Driver Downloads site: [Link](https://www.nvidia.com/download/index.aspx?lang=en-us)
 2. Search for your GPU and then download it. Remember to choose `Linux 64-bit` Operating System
-![driver](driver.png)
+    ![driver](images/driver.png)
 3. Install the driver:
 - Your driver may be of a higher version than this instructions, those following command is an example
 - Please use **Tab** to autocomplete the file name
@@ -157,7 +157,7 @@ nvcc --version
 ```
 Output:
 
-![cuda](cuda.png)
+![cuda](images/cuda.png)
 
 
 ## **Install CuDNN**
@@ -167,13 +167,13 @@ The installation bellow is **cuDNN v8.6.0**
 2. You'll have to log in, answer a few questions then you will be redirected to download. (You need to have a developer account to get CuDNN there are no direct links to download files. Why? Ask Nvidia)
 3. Select **Download cuDNN v8.6.0 (October 3rd, 2022), for CUDA 11.x**
 4. Select **Local Installer for Linux x86_64 (Tar)**
-![cudnn1](cudnn1.png)
-1. Open terminal and then navigate to your directory containing the cuDNN tar file
-2. Unzip the cuDNN package
+    ![cudnn1](images/cudnn1.png)
+5. Open terminal and then navigate to your directory containing the cuDNN tar file
+6. Unzip the CuDNN package
     ```bash
     tar -xvf cudnn-linux-x86_64-8.6.0.163_cuda11-archive.tar.xz 
     ```
-3. Copy those files into the CUDA toolkit directory
+7. Copy those files into the CUDA toolkit directory
     ```bash
     sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include 
     sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64 
@@ -186,7 +186,7 @@ cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 ```
 Output:
 
-![cudnn](cudnn.png)
+![cudnn](images/cudnn.png)
 
 
 ## **Install TensorFlow**
