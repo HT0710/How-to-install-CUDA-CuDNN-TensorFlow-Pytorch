@@ -109,7 +109,7 @@ If not, follow those step bellow:
         ```
 6.  [Verification](#verification)
 
-> **Note:** It has many other way to install it, but in my experiment this way cause less errors or simple to fix compare to other methods.
+> **Note:** It has many other way to install it, but in my experience this way cause less errors or simple to fix compare to other methods.
 
 ### 2. Miniconda
 You can use the following command to install Miniconda
