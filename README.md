@@ -18,7 +18,12 @@
   - [**Install CuDNN**](#install-cudnn)
       - [Verification](#verification-3)
   - [**Install TensorFlow**](#install-tensorflow)
+      - [Verification](#verification-4)
   - [**Install Pytorch**](#install-pytorch)
+      - [Verification](#verification-5)
+  - [License](#license)
+  - [References](#references)
+  - [Contact](#contact)
 
 
 ## Introduction
@@ -32,9 +37,9 @@ This is a step by step instructions of how to install:
 - Pytorch 2.0
 ```
 
-**Note:**
-- You can skip TensorFlow or Pytorch if don't use it.
-- Pytorch come with it own CuDNN so you can skip CuDNN installation if use Pytorch only.
+> **Note:**
+> - You can skip TensorFlow or Pytorch if don't use it.
+> - Pytorch come with it own CuDNN so you can skip CuDNN installation if use Pytorch only.
 
 ## **Requirements**
 ### System
@@ -43,11 +48,11 @@ This is a step by step instructions of how to install:
 - NVIDIA Graphics Card *
 ```
 
-**Note:**
-- \* AMD doesn't have CUDA cores. *CUDA is proprietary framework created by Nvidia and it's used only on Nvidia cards.*
-- I don't recommend trying to use GPU on Windows, believe me it's not worth the effort.
-- TensorFlow only officially support Ubuntu. However, the following instructions may also work for other Linux distros.
-- Personally I am using Zorin OS and it works fine.
+> **Note:**
+> - I don't recommend trying to use GPU on Windows, believe me it's not worth the effort.
+> - TensorFlow only officially support Ubuntu. However, the following instructions may also work for other Linux distros.
+> - \* AMD doesn't have CUDA cores. *CUDA is proprietary framework created by Nvidia and it's used only on Nvidia cards.*
+> - Personally I am using Zorin OS and it works fine.
 
 ### Software
 ```
@@ -56,9 +61,9 @@ This is a step by step instructions of how to install:
 - Miniconda (Recommended) *
 ```
 
-**Note:**
-- I will also include how to install the NVIDIA Driver and Miniconda in this instructions if you don't already have it.
-- \* *Miniconda is the recommended approach for installing TensorFlow with GPU support. It creates a separate environment to avoid changing any installed software in your system. This is also the easiest way to install the required software especially for the GPU setup.*
+> **Note:**
+> - I will also include how to install the NVIDIA Driver and Miniconda in this instructions if you don't already have it.
+> - \* Miniconda is the recommended approach for installing TensorFlow with GPU support. It creates a separate environment to avoid changing any installed software in your system. This is also the easiest way to install the required software especially for the GPU setup.
 
 
 ## **Preparation (IMPORTANT)**
@@ -104,6 +109,8 @@ If not, follow those step bellow:
         ```
 6.  [Verification](#verification)
 
+> **Note:** It has many other way to install it, but in my experiment this way cause less errors or simple to fix compare to other methods.
+
 ### 2. Miniconda
 You can use the following command to install Miniconda
 
@@ -133,6 +140,7 @@ Install
 ```bash
 conda -V 
 ```
+> **Note:** Miniconda is a free minimal installer for conda. Is a package and environment manager that helps you install, update, and remove packages from your command-line interface. You can use it to write your own packages and maintain different versions of them in separate environments.
 
 ## **Install CUDA**
 - The installation bellow is **CUDA Toolkit 11.8**
@@ -158,6 +166,8 @@ Install:
     source ~/.bashrc
     ```
 
+> **Note:** Same as the driver, it has many other way to install it but with this way you can install and use multiple version of CUDA by simply change the version of CUDA in path (~/.bashrc).
+
 #### Verification
 ```bash
 nvcc --version 
@@ -170,7 +180,7 @@ Output:
 The installation bellow is **cuDNN v8.6.0**
 
 1. Go to this site: https://developer.nvidia.com/rdp/cudnn-archive
-2. You'll have to log in, answer a few questions then you will be redirected to download. (You need to have a developer account to get CuDNN there are no direct links to download files. Why? Ask Nvidia)
+2. You'll have to log in, answer a few questions then you will be redirected to download
 3. Select **Download cuDNN v8.6.0 (October 3rd, 2022), for CUDA 11.x**
 4. Select **Local Installer for Linux x86_64 (Tar)**
     ![cudnn1](https://user-images.githubusercontent.com/95120444/228067998-c7738898-aad4-43a6-8fb4-e9830a022b84.png)
@@ -186,6 +196,8 @@ The installation bellow is **cuDNN v8.6.0**
     sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn* 
     ```
 
+> **Note:** You need to have a developer account to get CuDNN there are no direct links to download files. Why? *Ask Nvidia*.
+
 #### Verification
 ```bash
 cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2 
@@ -195,5 +207,108 @@ Output:
 ![cudnn](https://user-images.githubusercontent.com/95120444/228068029-a4e9fabb-b1aa-4b30-bb6f-0a3c7f27ce0f.png)
 
 ## **Install TensorFlow**
+Please read the [Requirements](#requirements) and the [Preparation](#preparation-important) sections before continue the installation bellow.
+
+1. Create a conda environment
+    - Create a new conda environment named `tf` and `python 3.9`:
+        ```bash
+        conda create --name tf python=3.9 
+        ```
+    - You can deactivate and activate it:
+        ```bash
+        conda deactivate 
+        conda activate tf 
+        ```
+    > **Note:** Make sure it is activated for the rest of the installation.
+
+2. GPU setup
+    - You can skip this section if you only run TensorFlow on the CPU.
+    - Make sure the NVIDIA GPU driver is installed. Use the following command to verify it:
+        ```bash
+        nvidia-smi 
+        ```
+    - Then install CUDA and cuDNN with conda and pip.
+        ```bash
+        conda install -c conda-forge cudatoolkit=11.8.0 
+        pip install nvidia-cudnn-cu11==8.6.0.163 
+        ```
+    - Configure the system paths.
+        ```bash
+        mkdir -p $CONDA_PREFIX/etc/conda/activate.d 
+        CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)")) 
+        echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh 
+        ```
+
+3. Install TensorFlow
+    - TensorFlow requires a recent version of pip, so upgrade your pip installation to be sure you're running the latest version.
+        ```bash
+        pip install --upgrade pip 
+        ```
+    - Then, install TensorFlow with pip.
+        ```bash
+        pip install tensorflow==2.12.* 
+        ```
+    > **Note:** Do not install TensorFlow with conda. It may not have the latest stable version. pip is recommended since TensorFlow is only officially released to PyPI.
+
+#### Verification
+- Verify the CPU setup:
+    ```bash
+    python3 -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))" 
+    ```
+    If a tensor is returned, you've installed TensorFlow successfully.
+- Verify the GPU setup:
+    ```bash
+    python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" 
+    ```
+    If a list of GPU devices is returned, you've installed TensorFlow successfully.
 
 ## **Install Pytorch**
+Please read the [Requirements](#requirements) and the [Preparation](#preparation-important) sections before continue the installation bellow.
+
+> **Note:** Pytorch come with it own CuDNN so you can skip CuDNN installation if use Pytorch only.
+
+1. Create a conda environment
+    - Create a new conda environment named `torch` and `python 3.9`:
+        ```bash
+        conda create --name torch python=3.9 
+        ```
+    - You can deactivate and activate it:
+        ```bash
+        conda deactivate 
+        conda activate torch 
+        ```
+    > **Note:** Make sure it is activated for the rest of the installation.
+
+2. Install TensorFlow
+    ```bash
+    conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia 
+    ```
+
+
+
+#### Verification
+```bash
+# Check CUDA is available
+python3 -c "import torch; print(torch.cuda.is_available())"
+# CUDA device count
+python3 -c "import torch; print(torch.cuda.device_count())"
+# Current CUDA device
+python3 -c "import torch; print(torch.cuda.current_device())"
+# Get device 0 name
+python3 -c "import torch; print(torch.cuda.get_device_name(0))"
+```
+
+## License
+This project is licensed under the MIT License. See [LICENSE](https://github.com/HT0710/How-to-install-CUDA-CuDNN-TensorFlow-Pytorch/blob/main/LICENSE) for more details.
+
+## References
+- NVIDIA Driver: https://www.nvidia.com/download/index.aspx?lang=en-us
+- CUDA Toolkit: https://developer.nvidia.com/cuda-toolkit-archive
+- CuDNN: https://developer.nvidia.com/rdp/cudnn-archive
+- TensorFlow: https://www.tensorflow.org/install/pip
+- Pytorch: https://pytorch.org/get-started/locally/
+
+## Contact
+Open an issue: [New issue](https://github.com/HT0710/How-to-install-CUDA-CuDNN-TensorFlow-Pytorch/issues/new)
+
+Mail: pthung7102002@gmail.com
