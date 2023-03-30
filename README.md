@@ -79,36 +79,59 @@ If you got the output, the NVIDIA Driver is already installed. Then go to the ne
 ![smi](https://user-images.githubusercontent.com/95120444/228067789-0d42c6f4-daaa-4c9c-aa4c-bc95359f4a5e.png)
 
 If not, follow those step bellow:
-1. Install any pending updates for your existing packages
-    ```bash
-    sudo apt update && sudo apt upgrade -y
-    ```
-2. Install all essential packages
-    ```bash
-    sudo apt install build-essential
-    ```
-3. Go to NVIDIA Driver Downloads site: https://www.nvidia.com/download/index.aspx?lang=en-us
-4. Search for your GPU and then download it. Remember to choose `Linux 64-bit` Operating System
+1. Go to NVIDIA Driver Downloads site: https://www.nvidia.com/download/index.aspx?lang=en-us
+2. Search for your GPU and then download it. Remember to choose `Linux 64-bit` Operating System
     ![driver](https://user-images.githubusercontent.com/95120444/228067841-b66b38aa-8d27-4f9d-8ad1-0c87bb524fc7.png)
-5. Install the driver:
-- Your driver may be of a higher version than this instructions, those following command is an example
-- Please use **Tab** to autocomplete the file name
-    1. Open terminal and then navigate to your directory containing the driver
-    2. Give execution permission:
+3. Blacklist nouveau
+   > **Note:** It does not work with CUDA and must be disabled
+    ```bash
+    sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf" 
+    sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf" 
+    ```
+4. Remove old NVIDIA driver (optional)
+    > **Note:** Desktop maybe temporary at lower resolution after this step
+    ```bash
+    sudo apt-get remove '^nvidia-*' 
+    sudo apt autoremove 
+    reboot
+    ```
+5. Install any pending updates and all required packages
+    ```bash
+    sudo apt update && sudo apt upgrade -y 
+    sudo apt install build-essential libglvnd-dev pkg-config 
+    ```
+6. Install the driver:
+    > **Note:** Your driver version may higher than this instructions, those following command is an example. **Please use `Tab` to autocomplete the file name.**
+    1. Stop current display server
+        > **Note:** For the smoothest installation
         ```bash
+        sudo telinit 3
+        ```
+    2. Enter terminal mode, press: **`CTRL + ALT + F1`** and login with your username and password
+    3. Navigate to your directory containing the driver
+        ```bash
+        # Example
+        cd Downloads/
+        ls
+        # It must contain: NVIDIA-Linux-x86_64-5xx.x.x.run
+        ```
+    4. Give execution permission
+        ```bash
+        # Example
         sudo chmod -x NVIDIA-Linux-x86_64-5xx.x.x.run 
         ```
-    3. Run the installation:
+    5. Run the installation
         ```bash
+        # Example
         sudo ./NVIDIA-Linux-x86_64-5xx.x.x.run 
         ```
-    4. Press enter and read those information carefully, you can watch some other driver installation video if it's hard to understand
-    5. Now reset your computer or open terminal and run:
+    6. Following the wizard and search google if unsure
+        > **Note:** Usually you just need to press Enter the whole thing
+    7. The Nvidia driver is now installed. Reboot your system
         ```bash
         reboot 
         ```
-6.  [Verification](#verification)
-
+7.  [Verification](#verification)
 > **Note:** It has many other way to install it, but in my experience this way cause less errors or simple to fix compare to other methods.
 
 ### 2. Miniconda
