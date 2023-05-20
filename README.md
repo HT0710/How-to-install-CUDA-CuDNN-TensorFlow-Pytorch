@@ -41,7 +41,6 @@ This is a step by step instructions of how to install:
 
 > **Note:**
 > - You can skip TensorFlow or Pytorch if don't use it.
-> - Pytorch come with it own CuDNN so you can skip CuDNN installation if use Pytorch only.
 
 ## **Requirements**
 ### System
