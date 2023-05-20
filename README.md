@@ -10,6 +10,8 @@
     - [Software](#software)
   - [**Preparation (IMPORTANT)**](#preparation-important)
     - [1. NVIDIA Driver](#1-nvidia-driver)
+      - [Method 1](#method-1)
+      - [Method 2](#method-2)
       - [Verification](#verification)
     - [2. Miniconda](#2-miniconda)
       - [Verification](#verification-1)
@@ -68,17 +70,27 @@ This is a step by step instructions of how to install:
 
 ## **Preparation (IMPORTANT)**
 ### 1. NVIDIA Driver
-#### Verification
-Check if you already have it by run this on your terminal:
-```bash
-nvidia-smi 
-```
+Check if you already have it [Verification](#verification):
 
-If you got the output, the NVIDIA Driver is already installed. Then go to the next step.
+If not, follow those step bellow (2 Method):
+#### Method 1
+> Easy! But sometimes error (Try method 2 if it's not work)
+1. Install any pending updates and all required packages
+    ```bash
+    sudo apt update && sudo apt upgrade -y 
+    sudo apt install build-essential libglvnd-dev pkg-config 
+    ```
+2. Install nvidia driver
+    ```bash
+    sudo apt install nvidia-driver-525
+    ```
+3. The Nvidia driver is now installed. Reboot your system
+    ```bash
+    reboot 
+    ```
 
-![smi](https://user-images.githubusercontent.com/95120444/228067789-0d42c6f4-daaa-4c9c-aa4c-bc95359f4a5e.png)
-
-If not, follow those step bellow:
+#### Method 2
+> Try this if method 1 is not work
 1. Go to NVIDIA Driver Downloads site: https://www.nvidia.com/download/index.aspx?lang=en-us
 2. Search for your GPU and then download it. Remember to choose `Linux 64-bit` Operating System
     ![driver](https://user-images.githubusercontent.com/95120444/228067841-b66b38aa-8d27-4f9d-8ad1-0c87bb524fc7.png)
@@ -131,8 +143,16 @@ If not, follow those step bellow:
         ```bash
         reboot 
         ```
-7.  [Verification](#verification)
-> **Note:** It has many other way to install it, but in my experience this way cause less errors or simple to fix compare to other methods.
+
+#### Verification
+```bash
+nvidia-smi 
+```
+
+If you got the output, the NVIDIA Driver is already installed. Then go to the next step.
+
+![smi](https://user-images.githubusercontent.com/95120444/228067789-0d42c6f4-daaa-4c9c-aa4c-bc95359f4a5e.png)
+
 
 ### 2. Miniconda
 You can use the following command to install Miniconda
