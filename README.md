@@ -321,7 +321,7 @@ Please read the [Requirements](#requirements) and the [Preparation](#preparation
         ```
     > **Note:** Make sure it is activated for the rest of the installation.
 
-2. Install TensorFlow
+2. Install PyTorch
     ```bash
     conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia 
     ```
